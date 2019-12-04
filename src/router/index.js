@@ -19,6 +19,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  {
+    path: '/Produce',
+    name: 'Produce',
+    component: () =>
+      import(/* webpackChunkName: "Kanban" */ '../views/Produce.vue'),
+  },
 ]
 
 const router = new VueRouter({
