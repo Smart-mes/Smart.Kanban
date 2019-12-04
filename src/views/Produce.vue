@@ -8,6 +8,11 @@
 <script>
 export default {
   name: 'Produce',
+  computed: {
+    wsCode () {
+      return this.$route.query.wsCode
+    },
+  },
 }
 </script>
 
