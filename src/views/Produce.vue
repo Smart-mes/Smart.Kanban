@@ -62,16 +62,7 @@ export default {
         return void alert('缺少参数ws')
       }
       api.get('ProduceReport', { wsCode: this.wsCode }).then(data => {
-        this.tableData = [...data, {
-          lineName: '包装3线',
-          customer: '杭叉',
-          orderNo: 'W20051803',
-          productName: 'HPQ1.5-4HC-24异步电机',
-          qty: '150',
-          cpltQty: '50',
-          failQty: '0',
-          reach: '33.33',
-        }, { lineName: '包装4线' }]
+        this.tableData = data
         this.timer = setTimeout(this.fetchReportData, 5000)
       })
     },
