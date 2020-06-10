@@ -1,6 +1,7 @@
 <template>
   <div id="Produce">
     <h1 class="title">{{ model.title }}</h1>
+    <p class="time">{{ time }}</p>
     <v-table
       style="width: 100%;"
       class="main-table"
@@ -11,8 +12,8 @@
       :vertical-resize-offset="60"
       :multiple-sort="false"
       :min-height="450"
-      :title-row-height="54"
-      :row-height="48"
+      :title-row-height="80"
+      :row-height="80"
     />
   </div>
 </template>
@@ -26,13 +27,14 @@ export default {
   data () {
     return {
       timer: null,
+      time: '',
       model: Produce,
       tableData: [],
     }
   },
   computed: {
     wsCode () {
-      return this.$route.query.wsCode
+      return this.$route.query.ws
     },
     columns () {
       return this.model.cols.map(col => {
@@ -57,10 +59,19 @@ export default {
     fetchReportData () {
       this._clear()
       if (!this.wsCode) {
-        return void alert('缺少参数wsCode')
+        return void alert('缺少参数ws')
       }
       api.get('ProduceReport', { wsCode: this.wsCode }).then(data => {
-        this.tableData = data
+        this.tableData = [...data, {
+          lineName: '包装3线',
+          customer: '杭叉',
+          orderNo: 'W20051803',
+          productName: 'HPQ1.5-4HC-24异步电机',
+          qty: '150',
+          cpltQty: '50',
+          failQty: '0',
+          reach: '33.33',
+        }, { lineName: '包装4线' }]
         this.timer = setTimeout(this.fetchReportData, 5000)
       })
     },
@@ -70,11 +81,12 @@ export default {
 
 <style lang="scss">
 .title {
+  font-size: 48px;
   text-align: center;
 }
 .main-table {
   margin: 5px auto;
-  font-size: 20px;
+  font-size: 22px;
   .v-table-header-row {
     background-color: #efeeec;
     font-weight: bold;
@@ -85,5 +97,14 @@ export default {
 }
 .v-table-row td:first-child > div {
   margin-left: 3px;
+}
+
+#Produce {
+  .v-table-title-cell {
+    font-size: 26px;
+  }
+  .v-table-body-cell {
+    font-size: 24px;
+  }
 }
 </style>
